@@ -5,7 +5,7 @@ const app = express();
 
 app.use(cors());
 
-const bodyText = ```
+const bodyText = `
 . ___  __  ____  ____
 ./ __)/  \(    \(  __)
 ( (__(  O )) D ( ) _)
@@ -15,7 +15,7 @@ const bodyText = ```
 .) _) /    /( (_ \ )( /    / ) _)
 (____)\_)__) \___/(__)\_)__)(____)
 
-```;
+`;
 
 app.get('/', (req, res) => {
    res.set('Content-Type', 'text/plain');
