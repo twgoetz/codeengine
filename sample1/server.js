@@ -5,11 +5,13 @@ const app = express();
 
 app.use(cors());
 
+const userInfo = os.userInfo();
+const userPretty = JSON.stringify(userInfo, null, 2);
+
 const bodyText = `
 Code Engine
 
-$UID=${process.env['UID']}
-$USER=${process.env['USER']}
+os.userInfo() = ${userPretty}
 `;
 
 app.get('/', (req, res) => {
