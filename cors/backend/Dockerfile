@@ -1,4 +1,4 @@
-FROM node:18
+FROM public.ecr.aws/docker/library/node:lts-alpine
 
 WORKDIR /usr/src/backend
 COPY . .
