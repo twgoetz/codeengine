@@ -53,7 +53,7 @@ app.post("/sleep", (req, res) => {
   const timeout = Number.parseInt(timeoutParam) * 1_000;
   const now = new Date().getDate();
   ready = now + timeout;
-  res.status(200).send(`App will sleep for ${timeout} seconds`);
+  res.status(200).send(`App will sleep for ${timeout} seconds until ${new Date(ready).toDateString()}`);
 });
 
 const port = 80;
