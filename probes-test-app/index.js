@@ -62,6 +62,7 @@ app.get("/alive", (req, res) => {
 app.post("/die", (req, res) => {
   console.log("Dying...");
   alive = false;
+  res.status(200).send('Dying...');
 });
 
 const port = 80;
