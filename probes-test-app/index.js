@@ -11,46 +11,25 @@ const {
   livenessOutageLength,
 } = process.env;
 
-const start = new Date().getDate();
-// ready = 0 -> not ready yet
-// ready > 0 -> ready
-// ready < 0 -> no longer ready
 let ready = 0;
 
 let alive = true;
 
 const isReady = () => {
-  if (ready < 0) {
-    return false;
-  }
-  const now = new Date().getDate();
-  if (ready > 0) {
-    if (!readinessDuration) {
-      // If the duration is not set, we never become unready
-      return true;
-    }
-    const readyNow = ready - now < readinessDuration * 1_000;
-    if (!readyNow) {
-      ready = -1;
-    }
-  }
-  const readyNow = now - start > readinessDelay * 1_000;
-  if (readyNow) {
-    ready = now;
+  if (ready === 0) {
     return true;
   }
-  return false;
+  const now = new Date().getDate();
+  return now > ready;
 };
 
 app.get("/ready", (req, res) => {
   const readiness = isReady();
   console.log(`Ready: ${readiness}`);
   if (readiness) {
-    res.set("Content-Type", "text/plain");
-    res.send("I'm ready");
+    res.set("Content-Type", "text/plain").status(200).send("I'm ready");
   } else {
-    res.status(404);
-    res.send("Not ready.");
+    res.status(404).send("Not ready.");
   }
 });
 
@@ -67,6 +46,14 @@ app.post("/die", (req, res) => {
   console.log("Dying...");
   alive = false;
   res.status(200).send("Dying...");
+});
+
+app.post("/sleep", (req, res) => {
+  const timeoutParam = req.params.timeout || '10';
+  const timeout = Number.parseInt(timeoutParam) * 1_000;
+  const now = new Date().getDate();
+  ready = now + timeout;
+  res.status(200).send(`App will sleep for ${timeout} seconds`);
 });
 
 const port = 80;
