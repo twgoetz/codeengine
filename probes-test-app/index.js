@@ -1,4 +1,8 @@
 const app = require("express")();
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const {
   readinessDelay,
@@ -62,7 +66,7 @@ app.get("/alive", (req, res) => {
 app.post("/die", (req, res) => {
   console.log("Dying...");
   alive = false;
-  res.status(200).send('Dying...');
+  res.status(200).send("Dying...");
 });
 
 const port = 80;
