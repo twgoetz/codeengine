@@ -23,7 +23,7 @@ const isReady = () => {
   return now > ready;
 };
 
-app.get("/ready", (req, res) => {
+app.get("/ready/:timeout", (req, res) => {
   const readiness = isReady();
   console.log(`Ready: ${readiness}`);
   if (readiness) {
