@@ -23,7 +23,7 @@ const isReady = () => {
   return now > ready;
 };
 
-app.get("/ready/:timeout", (req, res) => {
+app.get("/ready", (req, res) => {
   const readiness = isReady();
   console.log(`Ready: ${readiness}`);
   if (readiness) {
@@ -48,7 +48,7 @@ app.post("/die", (req, res) => {
   res.status(200).send("Dying...");
 });
 
-app.post("/sleep", (req, res) => {
+app.post("/sleep/:timeout", (req, res) => {
   const timeoutParam = req.params.timeout || '10';
   const timeout = Number.parseInt(timeoutParam) * 1_000;
   const now = new Date().valueOf();
