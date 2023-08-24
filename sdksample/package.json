@@ -1,0 +1,23 @@
+{
+  "name": "code-engine-test-repo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "node-env-run": "^4.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "@ibm-cloud/ibm-code-engine-sdk": "^3.1.0",
+    "ibm-cloud-sdk-core": "^4.0.5"
+  }
+}
