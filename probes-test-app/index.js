@@ -1,15 +1,9 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
 
+// Not using this for anything...
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-const {
-  readinessDelay,
-  readinessDuration,
-  livenessOutageDelay,
-  livenessOutageLength,
-} = process.env;
 
 let ready = 0;
 
@@ -53,7 +47,7 @@ app.post("/sleep/:timeout", (req, res) => {
   const timeout = Number.parseInt(timeoutParam) * 1_000;
   const now = new Date().valueOf();
   ready = now + timeout;
-  res.status(200).send(`App will sleep for ${timeoutParam} seconds until ${new Date(ready).toDateString()}`);
+  res.status(200).send(`App will sleep for ${timeoutParam} seconds until ${new Date(ready).toISOString()}`);
 });
 
 const port = 80;
