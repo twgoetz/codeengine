@@ -27,6 +27,13 @@ app.get("/ready", (req, res) => {
   }
 });
 
+const shutdown = () => {
+  server.close(() => {
+    console.log("Express server shut down, exiting.");
+    process.exit(2);
+  });
+};
+
 app.get("/alive", (req, res) => {
   console.log("Look lively!");
   if (alive) {
@@ -43,14 +50,24 @@ app.post("/die", (req, res) => {
 });
 
 app.post("/sleep/:timeout", (req, res) => {
-  const timeoutParam = req.params.timeout || '10';
+  const timeoutParam = req.params.timeout || "10";
   const timeout = Number.parseInt(timeoutParam) * 1_000;
   const now = new Date().valueOf();
   ready = now + timeout;
-  res.status(200).send(`App will sleep for ${timeoutParam} seconds until ${new Date(ready).toISOString()}`);
+  res
+    .status(200)
+    .send(
+      `App will sleep for ${timeoutParam} seconds until ${new Date(
+        ready
+      ).toISOString()}`
+    );
 });
 
+// Handle SIGTERM and SIGINT
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+
 const port = 80;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log("I'm listening!");
 });
