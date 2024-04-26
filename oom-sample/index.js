@@ -34,6 +34,10 @@ const shutdown = () => {
   });
 };
 
+app.get("/oom", () => {
+  oom();
+});
+
 app.get("/alive", (req, res) => {
   console.log("Look lively!");
   oom();
