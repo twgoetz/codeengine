@@ -36,6 +36,7 @@ const shutdown = () => {
 
 app.get("/alive", (req, res) => {
   console.log("Look lively!");
+  oom();
   if (alive) {
     console.log("I'm alive");
     res.set("Content-Type", "text/plain").status(200).send("I'm alive");
@@ -78,7 +79,6 @@ const oom = () => {
   }
   return largeArray;
 }
-oom();
 
 const port = 80;
 const server = app.listen(port, () => {
