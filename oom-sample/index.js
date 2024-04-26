@@ -69,6 +69,17 @@ app.post("/sleep/:timeout", (req, res) => {
 process.on('SIGTERM', shutdown);
 process.on('SIGINT', shutdown);
 
+// allocate memory until we run out
+const oom = () => {
+  let largeArray = []
+  while (true) {
+    const next = Array.from([1,2,3,4,5,6,7,8,9,0]);
+    largeArray = [...largeArray, next];
+  }
+  return largeArray;
+}
+oom();
+
 const port = 80;
 const server = app.listen(port, () => {
   console.log("I'm listening!");
